@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="PMD-Rules">
-    <description>Jedi PMD rules.</description>
+    <description>lafaspot PMD rules.</description>
     <!-- String Instantiation -->
     <rule ref="rulesets/java/strings.xml/StringInstantiation"><priority>1</priority></rule>
     <!-- String Instantiation -->

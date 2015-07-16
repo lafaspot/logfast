@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>logfast</groupId>
+	<groupId>com.github.lafa.logfast</groupId>
 	<artifactId>logfast</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
@@ -25,8 +24,8 @@
 		<project-name>logback</project-name>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
-		<excludedJNILibraries></excludedJNILibraries>
-		<excludedWarJNILibraries></excludedWarJNILibraries>
+		<excludedJNILibraries />
+		<excludedWarJNILibraries />
 		<jdk.version>1.8</jdk.version>
 		<maven-findbugs-plugin.version>3.0.1</maven-findbugs-plugin.version>
 		<maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
@@ -386,13 +385,13 @@
 						<id>checkstyle</id>
 						<phase>validate</phase>
 						<configuration>
-							<configLocation>jedi_checkstyle.xml</configLocation>
+							<configLocation>checkstyle.xml</configLocation>
 							<violationSeverity>warning</violationSeverity>
 							<logViolationsToConsole>true</logViolationsToConsole>
 							<failsOnError>true</failsOnError>
 							<includeTestSourceDirectory>true</includeTestSourceDirectory>
 							<propertyExpansion>config_loc=${main.basedir}</propertyExpansion>
-							<suppressionsLocation>jedi_checkstyle_suppressions.xml</suppressionsLocation>
+							<suppressionsLocation>checkstyle_suppressions.xml</suppressionsLocation>
 							<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
 						</configuration>
 						<goals>
