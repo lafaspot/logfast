@@ -1,5 +1,9 @@
 package com.lafaspot.logfast.logging;
 
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.lafaspot.logfast.logging.internal.LogPage;
@@ -22,6 +26,12 @@ public class Logger {
     static final int DEBUGINT = 5;
     static final int TRACEINT = 6;
 
+    /**
+     * The class defines the various log levels at which the data needs to be logged.
+     *
+     * @author lafa
+     *
+     */
     public static enum Level {
         FATAL(FATALINT), ERROR(ERRORINT), WARN(WARNINT), INFO(INFOINT), DEBUG(DEBUGINT), TRACE(TRACEINT);
 
@@ -29,11 +39,32 @@ public class Logger {
             this.numeric = numeric;
         }
 
-        public int numeric;
-
         public int getNumeric() {
             return numeric;
         }
+
+        /**
+         * Return the log level corresponding to the integer value passed in as {@code numeric).
+         * @param numeric the numeric value for which the log level needs to be returned.
+         * @return the log level corresponding to the numeric value passed in. Returns null if the 
+         * numeric value does not correspond to a log level.
+         */
+        public static Level fromNumeric(final int numeric) {
+            return levelMap.get(numeric);
+        }
+
+
+        private int numeric;
+
+        /** Map to store the mapping from integer to the level enum type. */
+        static Map<Integer, Level> levelMap = new HashMap<>();
+
+        static {
+            for (final Level level : EnumSet.allOf(Level.class)) {
+                levelMap.put(level.numeric, level);
+            }
+        }
+
     }
 
     private static final int PAGE_SIZE = 3;
