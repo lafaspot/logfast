@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.github.lafa.logfast</groupId>
+	<groupId>logfast</groupId>
 	<artifactId>logfast</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>${project.artifactId}</name>
 	<url>https://github.com/lafa/logfast</url>
 	<description>Parent POM file for logfast project</description>
@@ -16,17 +17,16 @@
 		<module>core</module>
 	</modules>
 	<scm>
-		<developerConnection>scm:git:https://github.com/lafa/logfast.git</developerConnection>
-		<connection>scm:git:https://github.com/lafa/logfast.git</connection>
+		<developerConnection>scm:git:git://github.com/lafa/logfast.git</developerConnection>
+		<connection>scm:git:git://github.com/lafa/logfast.git</connection>
 		<url>https://github.com/lafa/logfast.git</url>
-	  <tag>logfast-1.0</tag>
-  </scm>
+	</scm>
 	<properties>
 		<project-name>logback</project-name>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
-		<excludedJNILibraries />
-		<excludedWarJNILibraries />
+		<excludedJNILibraries></excludedJNILibraries>
+		<excludedWarJNILibraries></excludedWarJNILibraries>
 		<jdk.version>1.8</jdk.version>
 		<maven-findbugs-plugin.version>3.0.1</maven-findbugs-plugin.version>
 		<maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
@@ -113,31 +113,31 @@
 					<version>${jacoco-maven-plugin.version}</version>
 				</plugin>
 				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.3</version>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.7</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>1.9.1</version>
+					<artifactId>javacc-maven-plugin</artifactId>
+					<version>2.6</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>2.5.2</version>
+					<version>2.0-beta-8</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-assembly-plugin</artifactId>
-					<version>2.5.5</version>
+					<version>2.4.1</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-clean-plugin</artifactId>
-					<version>2.6.1</version>
+					<version>2.6</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-enforcer-plugin</artifactId>
-					<version>1.4</version>
+					<version>1.3.1</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-pmd-plugin</artifactId>
@@ -150,15 +150,15 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-project-info-reports-plugin</artifactId>
-					<version>2.8</version>
+					<version>2.7</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>3.4</version>
+					<version>2.1.1</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-source-plugin</artifactId>
-					<version>2.4</version>
+					<version>2.3</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -173,7 +173,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-scm-plugin</artifactId>
-					<version>1.9.4</version>
+					<version>1.9.2</version>
 					<inherited>false</inherited>
 				</plugin>
 				<plugin>
@@ -252,6 +252,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
 				<configuration>
 					<fork>true</fork>
 					<meminitial>128m</meminitial>
@@ -385,13 +386,13 @@
 						<id>checkstyle</id>
 						<phase>validate</phase>
 						<configuration>
-							<configLocation>checkstyle.xml</configLocation>
+							<configLocation>jedi_checkstyle.xml</configLocation>
 							<violationSeverity>warning</violationSeverity>
 							<logViolationsToConsole>true</logViolationsToConsole>
 							<failsOnError>true</failsOnError>
 							<includeTestSourceDirectory>true</includeTestSourceDirectory>
 							<propertyExpansion>config_loc=${main.basedir}</propertyExpansion>
-							<suppressionsLocation>checkstyle_suppressions.xml</suppressionsLocation>
+							<suppressionsLocation>jedi_checkstyle_suppressions.xml</suppressionsLocation>
 							<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
 						</configuration>
 						<goals>
