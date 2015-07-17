@@ -174,7 +174,7 @@ public class LoggerTest {
     }
     
     /**
-     * Tests the lookup tabel for level.
+     * Tests the level.
      */
     @Test
     public void testLevel() {
