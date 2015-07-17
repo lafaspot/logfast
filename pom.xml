@@ -16,7 +16,7 @@
 		<module>core</module>
 	</modules>
 	<scm>
-		<developerConnection>scm:git:git://github.com/lafa/logfast.git</developerConnection>
+		<developerConnection>scm:git:https://github.com/lafa/logfast.git</developerConnection>
 		<connection>scm:git:git://github.com/lafa/logfast.git</connection>
 		<url>https://github.com/lafa/logfast.git</url>
 	  <tag>logfast-1.0</tag>
