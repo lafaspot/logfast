@@ -16,6 +16,13 @@
 	<modules>
 		<module>core</module>
 	</modules>
+	<developers>
+		<developer>
+			<id>lafa</id>
+			<name>Lafa</name>project
+			<email>luis.alves@lafaspot.com</email>
+		</developer>
+	</developers>
 	<scm>
 		<developerConnection>scm:git:https://github.com/lafa/logfast.git</developerConnection>
 		<connection>scm:git:https://github.com/lafa/logfast.git</connection>
