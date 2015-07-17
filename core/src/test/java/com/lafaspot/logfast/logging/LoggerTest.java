@@ -184,6 +184,7 @@ public class LoggerTest {
         Assert.assertEquals(Level.fromNumeric(4), Level.INFO, "Expected info level");
         Assert.assertEquals(Level.fromNumeric(5), Level.DEBUG, "Expected debug level");
         Assert.assertEquals(Level.fromNumeric(6), Level.TRACE, "Expected trace level");
+        Assert.assertEquals(Level.fromNumeric(8), Level.INFO, "Expected default level as info");
     }
 
     private String binaryToJson(final byte[] avro, final String... options) throws UnsupportedEncodingException, Exception {
