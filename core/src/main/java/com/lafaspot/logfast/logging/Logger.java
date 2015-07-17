@@ -42,7 +42,7 @@ public class Logger {
         /**
          * Return the log level corresponding to the integer value passed in as {@code numeric).
          * @param numeric the numeric value for which the log level needs to be returned.
-         * @return the log level corresponding to the numeric value passed in. Returns null if the 
+         * @return the log level corresponding to the numeric value passed in. Returns info if the 
          * numeric value does not correspond to a log level.
          */
         public static Level fromNumeric(final int numeric) {
@@ -66,7 +66,7 @@ public class Logger {
                 return TRACE;
             }
             
-            return null;
+            return INFO;
         }
 
 
