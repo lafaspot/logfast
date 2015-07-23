@@ -172,6 +172,20 @@ public class LoggerTest {
         byte[] bytes = manager.getBytes();
         Assert.assertTrue(bytes.length > 0, "size should bigger than zero");
     }
+    
+    /**
+     * Tests the level.
+     */
+    @Test
+    public void testLevel() {
+        Assert.assertEquals(Level.fromNumeric(1), Level.FATAL, "Expected fatal level");
+        Assert.assertEquals(Level.fromNumeric(2), Level.ERROR, "Expected error level");
+        Assert.assertEquals(Level.fromNumeric(3), Level.WARN, "Expected warn level");
+        Assert.assertEquals(Level.fromNumeric(4), Level.INFO, "Expected info level");
+        Assert.assertEquals(Level.fromNumeric(5), Level.DEBUG, "Expected debug level");
+        Assert.assertEquals(Level.fromNumeric(6), Level.TRACE, "Expected trace level");
+        Assert.assertEquals(Level.fromNumeric(8), Level.INFO, "Expected default level as info");
+    }
 
     private String binaryToJson(final byte[] avro, final String... options) throws UnsupportedEncodingException, Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
