@@ -40,10 +40,10 @@ public class Logger {
         }
 
         /**
-         * Return the log level corresponding to the integer value passed in as {@code numeric).
+         * Return the log level corresponding to the integer value passed in as {@code numeric}.
+         * 
          * @param numeric the numeric value for which the log level needs to be returned.
-         * @return the log level corresponding to the numeric value passed in. Returns the default level
-         * if the numeric value does not correspond to a log level.
+         * @return the log level corresponding to the numeric value passed in. Returns the default level if the numeric value does not correspond to a log level.
          */
         public static Level fromNumeric(final int numeric) {
             switch(numeric) {
@@ -94,8 +94,9 @@ public class Logger {
     /**
      * Don't make this method public. - lafa
      *
-     * @param context
-     * @param manager
+     * @param context the LogContext for the logger instance
+     * @param level default Level for this logger instance
+     * @param manager the manager instance that owns this logger instance
      */
     protected Logger(final LogContext context, final Level level, final LogManager manager) {
         logger = org.slf4j.LoggerFactory.getLogger(context.getName());

@@ -24,7 +24,7 @@ public abstract class LogContext {
     /**
      * Name for this context. The name is used for look ups and find log pages that are related to a context with the same name.
      *
-     * @return
+     * @return the name of this LogContext
      */
     public final String getName() {
         return name;
@@ -33,7 +33,7 @@ public abstract class LogContext {
     /**
      * Return the context serialize to a String object. Sub classes should overwrite this method.
      *
-     * @return
+     * @return a string with a serialized version that is going to be written to a log
      */
     public String getSerial() {
         return "{" + getName() + "}";
