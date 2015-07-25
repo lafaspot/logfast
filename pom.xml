@@ -5,7 +5,7 @@
 	<groupId>com.github.lafa.logfast</groupId>
 	<artifactId>logfast</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<name>${project.artifactId}</name>
 	<url>https://github.com/lafa/logfast</url>
 	<description>Parent POM file for logfast project</description>
