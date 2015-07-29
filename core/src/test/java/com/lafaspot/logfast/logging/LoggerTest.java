@@ -100,7 +100,7 @@ public class LoggerTest {
         }
     }
 
-    @Test(enable=false)
+    @Test
     public void testMemoryLogger() throws UnsupportedEncodingException, Exception {
         LogContext context = new LogContext("email=123@lafaspot.com") {
             @Override
