@@ -11,11 +11,11 @@ jdk:
 before_install:
 
 install:
+  - mvn clean install -Dgpg.skip=true
 
 before_script:
 
 script:
-  - mvn clean install -Dgpg.skip=true
 
 after_success:
   - mvn clean deploy -Dgpg.skip=true
