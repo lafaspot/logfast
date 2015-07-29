@@ -18,7 +18,7 @@ before_script:
 script:
 
 after_success:
-  - mvn clean deploy -Dgpg.passphrase=tang
+  - mvn clean deploy  -Dgpg.skip=true
 
 after_failure:
   - cat com.github.lafa.logfast/target/surefire-reports/*.txt
