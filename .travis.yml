@@ -9,20 +9,16 @@ jdk:
   - oraclejdk8
 
 before_install:
-  - mvn clean install -Dgpg.skip=true
 
-before_install:
-  - mvn clean install -Dgpg.skip=true
+install:
 
-before_install:
-  - mvn clean install -Dgpg.skip=true
+before_script:
 
 script:
-  - mvn verify -Dgpg.skip=true
+  - mvn clean install -Dgpg.skip=true
 
 after_success:
-  - chmod a+x deploy.sh
-  - ./deploy.sh
+  - mvn clean deploy -Dgpg.skip=true
 
 after_failure:
   - cat com.github.lafa.logfast/target/surefire-reports/*.txt
