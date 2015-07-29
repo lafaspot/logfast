@@ -11,6 +11,9 @@ jdk:
 before_install:
   - mvn clean install -Dgpg.skip=true
 
+before_install:
+  - mvn clean install -Dgpg.skip=true
+
 script:
   - mvn verify -Dgpg.skip=true
 
