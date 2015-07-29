@@ -7,8 +7,12 @@ language: java
 
 jdk:
   - oraclejdk8
+
+before_install:
+  - mvn clean install -Dgpg.skip=true
+
 script:
-  - mvn verify -Dgpg.skip
+  - mvn verify -Dgpg.skip=true
 
 after_success:
   - chmod a+x deploy.sh
