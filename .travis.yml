@@ -5,8 +5,11 @@ branches:
 language: java
 jdk:
 - oraclejdk8
+env:
+  global:
+    secure: bN3c3+owhDSuia5xxY2TLFrYT/Tvce3YaGbV+iINCB8uZvOserzfs9ip9+Xt7fsCWoDMZb2uimXlyZblAakm4dGsAOKWl+NRBci6AOrvLmtq0poD2K+uT4YNDisSrhGxb9WdcJww/b10Tj7NQj6JzKj8X9sY/vkOnpEWW+WOLP+kPLqP8TmQJkIQdekrru6wpCg+jsXpNYcQPFWYctH5StL8dgUnbo60mTGcqvECqJhLR8MIIA9yG+094+IM4AKj4x//P+zrPVE72Oyu9Hvxfqz5A8d4GGpDSKbvy6M6t03NQfwLShwiQSvJ+p+UaXG718Hef9CPrutRmZi7/EtyVro9MQd/M5KaJ1phORDhiTjh2uX4DxdqViMrnG/Yo9A//EjXfS18usxYAddIWj4AjZhFiKT6ro8B3mRYFKG28hvMl/coyXwLhvb+pdQqb4QpRcLCk3P83b+O6E/SNVz3xXLoQZ6DUEa/0pYhXp6ZxR6u1jlEs9uOdxTHOaMsSezBY8vE3LxG/8/sB9dmHLIPW+gFm+aE8p6uFeFl3097ymsaOZFc+muSThuVMhxpxYke9VhJBGD8Z+QIi9QLqVrNCMgHSQSJN1I9EpFGLVoYZ8gI0xv+cH9KCt6HiwdnD2GrJ38LUOe1gGwu8dSZSxF+WyU0gJRMdMUs6TjRJCtOyzA=
 before_install:
-- gpg --passphrase "${super_secret_password}" super_secret.text.gpg
+- echo $super_secret_password | gpg super_secret.txt.gpg
 install:
 - mvn clean install
 before_script: 
@@ -16,6 +19,3 @@ after_success:
 after_failure:
 - cat com.github.lafa.logfast/target/surefire-reports/*.txt
 - cat com.github.lafa.logfast/core/target/surefire-reports/*.txt
-env:
-  global:
-    secure: bN3c3+owhDSuia5xxY2TLFrYT/Tvce3YaGbV+iINCB8uZvOserzfs9ip9+Xt7fsCWoDMZb2uimXlyZblAakm4dGsAOKWl+NRBci6AOrvLmtq0poD2K+uT4YNDisSrhGxb9WdcJww/b10Tj7NQj6JzKj8X9sY/vkOnpEWW+WOLP+kPLqP8TmQJkIQdekrru6wpCg+jsXpNYcQPFWYctH5StL8dgUnbo60mTGcqvECqJhLR8MIIA9yG+094+IM4AKj4x//P+zrPVE72Oyu9Hvxfqz5A8d4GGpDSKbvy6M6t03NQfwLShwiQSvJ+p+UaXG718Hef9CPrutRmZi7/EtyVro9MQd/M5KaJ1phORDhiTjh2uX4DxdqViMrnG/Yo9A//EjXfS18usxYAddIWj4AjZhFiKT6ro8B3mRYFKG28hvMl/coyXwLhvb+pdQqb4QpRcLCk3P83b+O6E/SNVz3xXLoQZ6DUEa/0pYhXp6ZxR6u1jlEs9uOdxTHOaMsSezBY8vE3LxG/8/sB9dmHLIPW+gFm+aE8p6uFeFl3097ymsaOZFc+muSThuVMhxpxYke9VhJBGD8Z+QIi9QLqVrNCMgHSQSJN1I9EpFGLVoYZ8gI0xv+cH9KCt6HiwdnD2GrJ38LUOe1gGwu8dSZSxF+WyU0gJRMdMUs6TjRJCtOyzA=
