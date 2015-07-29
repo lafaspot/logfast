@@ -1,25 +1,26 @@
-# whitelist
 branches:
   only:
-    - master
-    - stable
+  - master
+  - stable
 language: java
-
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 before_install:
-
+- echo $super_secret_password | gpg super_secret.txt.gpg 
 install:
   - mvn clean install -Dgpg.skip=true
 
 before_script:
 
 script:
-
+- mvn clean install -Dgpg.skip=true
+before_script: 
+script: 
 after_success:
-  - mvn clean deploy  -Dgpg.skip=true
-
+- mvn clean deploy  -Dgpg.skip=true
 after_failure:
-  - cat com.github.lafa.logfast/target/surefire-reports/*.txt
-  - cat com.github.lafa.logfast/core/target/surefire-reports/*.txt
+- cat com.github.lafa.logfast/target/surefire-reports/*.txt
+- cat com.github.lafa.logfast/core/target/surefire-reports/*.txt
+env:
+  global:
+    secure: X6Hb5ppxESjekDypMPZP670poKF3x7AjJ10XzZyIFOoyHPwRmVEOnb2knctMN3NcAmbJUoaX7ah+2ihKMPrhchfGHHNwq9a4RjFyfTYvXe8F7+bluYZFik00U7EJVkK2ssaSYJ0PsVqdeKvWoWjk+czmqFYhqhpsFCUVaOtGy2ZuBgOOTPPYMo34r+LCJhKdDtDJVBHH8/L9e2n3mqyWd8E+gvozOLf/XQ/L1hXI3cd4L/hIV5gf6qRhvMK+3XWah4KkZd+t+ON9PfBvoeOgXQlXrXxKyS1aLDWW5OORQClmZ2gsqLIGNnRUJDL95aKBdbURKDftrOo+dQbQJ0B1fIu/1i+7koD5Vpm0bFTNHyS/XVDKhRBJ8NRZbpcztO/VUmPzi4wkHbu7zCp4qsWTV/yR692KlzqqeV5JzJrzKaKO199K8SSTv2s16/fIBLNzzSj2b5wPgkm3H/wm6STfJvP8etUmasHhJUC9+VCjVcCVNTMZgxpRbYEd0iUMMXLAXvQ8lrQ6OOqqAb0R3fSVzOXaDrt459xdlmE/8AhXb0PtEY2Ugn5S887haR4D943+zPN0BvzKt9G8twObiXOSc3jSy/lBqE4B+s9TQZQLgLnwHSPn08i/QcSVnyL6l5eqArT57x0PhuglkgVe8C/QZPT0nEswuVmeHLhIg1PRN4o=
