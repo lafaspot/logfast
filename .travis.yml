@@ -6,13 +6,13 @@ language: java
 jdk:
 - oraclejdk8
 before_install:
-#- echo $super_secret_password | gpg --passphrase-fd 0 super_secret.txt.gpg
+- echo $super_secret_password | gpg super_secret.txt.gpg
 install:
 - mvn clean install -Dgpg.passphrase=jedi
 before_script: 
 script: 
 after_success:
-- mvn clean deploy  -Dgpg.skip=true
+- mvn clean deploy  -Dgpg.passphrase=jedi
 after_failure:
 - cat com.github.lafa.logfast/target/surefire-reports/*.txt
 - cat com.github.lafa.logfast/core/target/surefire-reports/*.txt
