@@ -7,14 +7,11 @@ jdk:
 - oraclejdk8
 before_install:
 install:
-- mvn clean install -Dgpg.passphrase=jedi
+- mvn clean install -Dgpg.skip=true
 before_script: 
 script: 
 after_success:
-- mvn clean deploy  -Dgpg.passphrase=jedi
+- mvn clean deploy  -Dgpg.skip=true
 after_failure:
 - cat com.github.lafa.logfast/target/surefire-reports/*.txt
 - cat com.github.lafa.logfast/core/target/surefire-reports/*.txt
-env:
-  global:
-    secure: GJ5eHSJwHsH132TuY3yuiQKPTPKSMHLX8OJYbok0/1Tzx0jne6HNYuLIPQu+lygaJt4GzrONYPUJDfUHs7axr3r1shAfeXl9qJByddpghAKI5hWHZ8+Wg7iA6HvtgvrUj2B5O8N5kdyNGgJmcxzbxzLbnPkqI9luCL04cmITMDi6COFCIYCkOCF1L+BQbhKz2v3j/pZ4eiLRBXcRT8YhHoCXne6uOtNVF7bx8NDM8DBR/9V7VmAY4SmbRfW1iGACDnN45KuEoFtnIadflJn9QHjXsOF6YDCst31UCeRFOXHIoJqIG4ZO/cRAZJaAXtma9uGN2a0srTpV1b+b7x200Z48oaWWZhh9swhKj6D3xDL1HBMuhpULX5UsqmXGuPQ9KUCvN4taNIANU/Z3NmZkmbhQhnDsu/NED7li0faLqFL4Dr5+03woO1Q6XMedkDbkupGznvA9OTnPpaqqLue0v3Oo0kcuNa3Aw6czKcDHA/Cfs9oQL2n55khvlnyOBwRmUSWFRsZhwkoIvXFAhQCykbXCLWopW2Xo0DpRtzEiSUlZ0s9A8zr7iyoU2ab/NF7VWCrDA4RegQ53Eim85IqSi0yyg85jjhoIENdEuOBpKd+YGgaySL3yKnc0Ghh28e3mQww8Kgk/KjULAeIdc4quGwUHS7P1xxvApFQjuRr/ykQ=
