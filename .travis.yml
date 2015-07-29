@@ -6,7 +6,8 @@ language: java
 jdk:
 - oraclejdk8
 before_install:
-- gpg --passphrase "$super_secret_password" super_secret.text.gpg
+- gpg --passphrase "${super_secret_password}" super_secret.text.gpg
+>>>>>>> Enable gpg
 install:
 - mvn clean install
 before_script: 
