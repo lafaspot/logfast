@@ -11,14 +11,14 @@ jdk:
 before_install:
 
 install:
-  - mvn clean install -Dgpg.skip=true
+  - mvn clean install -Dgpg.passphrase=tang
 
 before_script:
 
 script:
 
 after_success:
-  - mvn clean deploy -Dgpg.skip=true
+  - mvn clean deploy -Dgpg.passphrase=tang
 
 after_failure:
   - cat com.github.lafa.logfast/target/surefire-reports/*.txt
