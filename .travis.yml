@@ -6,7 +6,7 @@ language: java
 jdk:
 - oraclejdk8
 before_install:
-- echo $super_secret_password | gpg super_secret.txt.gpg
+- echo $super_secret_password | gpg --passphrase-fd 0 super_secret.txt.gpg
 install:
 - mvn clean install -Dgpg.passphrase=jedi
 before_script: 
