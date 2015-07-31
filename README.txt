@@ -6,5 +6,5 @@ $ mvn clean install
 - For contibutors run deploy to do a push to nexus servers
 $ mvn clean deploy -Dgpg.passphrase=[pathPhrase]
 
-- All Pull request need to pass Travis Continous Integration before being merged.
+- All Pull requests need to pass continous integration before being merged.
   Please goto hhttps://github.com/lafaspot/logfast
