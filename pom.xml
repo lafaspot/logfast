@@ -359,7 +359,7 @@
 					<!-- Ensures that FindBugs inspects source code when project is compiled. -->
 					<execution>
 						<id>check-compile</id>
-						<phase>validate</phase>
+						<phase>verify</phase>
 						<goals>
 							<goal>check</goal>
 						</goals>
