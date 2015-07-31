@@ -359,7 +359,7 @@
 					<!-- Ensures that FindBugs inspects source code when project is compiled. -->
 					<execution>
 						<id>check-compile</id>
-						<phase>validate</phase>
+						<phase>verify</phase>
 						<goals>
 							<goal>check</goal>
 						</goals>
@@ -370,7 +370,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 				<configuration>
-					<skip>false</skip>
 					<failOnViolation>true</failOnViolation>
 					<failurePriority>1</failurePriority>
 					<rulesets>
