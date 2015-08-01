@@ -28,7 +28,6 @@ import com.lafaspot.logfast.logging.internal.LogPage;
  *
  */
 public class LoggerTest {
-
     private LogContext context2;
     private ArrayList<Integer> numbers2;
     private Exception e2;
@@ -44,7 +43,6 @@ public class LoggerTest {
                 return "{sledid=" + getSled() + "/" + getName() + "}";
             }
 
-            @SuppressWarnings("unused")
             public String getSled() {
                 return "1291298";
             }
@@ -66,11 +64,12 @@ public class LoggerTest {
         manager2 = new LogManager();
         manager2.setLevel(Level.INFO);
         logger2 = manager2.getLogger(context2);
+        logger2.flush();
     }
 
     @Test(threadPoolSize = 1, invocationCount = 40, enabled = true)
     public void testLoggerSpeed() {
-        Logger logger3 = manager2.getLogger(context2);
+        final Logger logger3 = manager2.getLogger(context2);
         for (int i = 0; i < 2000; i++) {
             logger3.info(data2, e2);
         }
@@ -78,7 +77,7 @@ public class LoggerTest {
 
     @Test(threadPoolSize = 1, invocationCount = 40, enabled = true)
     public void testLoggerSpeedInactive() {
-        Logger logger3 = manager2.getLogger(context2);
+        final Logger logger3 = manager2.getLogger(context2);
         for (int i = 0; i < 2000; i++) {
             logger3.debug(data2, e2);
         }
@@ -86,7 +85,7 @@ public class LoggerTest {
 
     @Test(threadPoolSize = 1, invocationCount = 40, enabled = false)
     public void testLoggerSpeedLegacy() {
-        org.slf4j.Logger loggerLegacy = LoggerFactory.getLogger(LoggerTest.class);
+        final org.slf4j.Logger loggerLegacy = LoggerFactory.getLogger(LoggerTest.class);
         for (int i = 0; i < 2000; i++) {
             loggerLegacy.info(data2.toString(), e2);
         }
@@ -94,7 +93,7 @@ public class LoggerTest {
 
     @Test(threadPoolSize = 1, invocationCount = 40, enabled = true)
     public void testLoggerSpeedInactiveLegacy() {
-        org.slf4j.Logger loggerLegacy = LoggerFactory.getLogger(LoggerTest.class);
+        final org.slf4j.Logger loggerLegacy = LoggerFactory.getLogger(LoggerTest.class);
         for (int i = 0; i < 2000; i++) {
             loggerLegacy.debug(data2.toString(), e2);
         }
@@ -102,32 +101,31 @@ public class LoggerTest {
 
     @Test
     public void testMemoryLogger() throws UnsupportedEncodingException, Exception {
-        LogContext context = new LogContext("email=123@lafaspot.com") {
+        final LogContext context = new LogContext("email=123@lafaspot.com") {
             @Override
             public String getSerial() {
                 return "{sledid=" + getSled() + "/" + getName() + "}";
             }
 
-            @SuppressWarnings("unused")
             public String getSled() {
                 return "1291298";
             }
 
         };
 
-        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        final ArrayList<Integer> numbers = new ArrayList<Integer>();
         numbers.add(10);
         numbers.add(20);
 
         // some data to log
-        LogDataUtil data = new LogDataUtil();
-        Exception e = new Exception();
+        final LogDataUtil data = new LogDataUtil();
+        final Exception e = new Exception();
         // some exception to log with stack
         e.fillInStackTrace();
 
-        LogManager manager = new LogManager();
+        final LogManager manager = new LogManager();
         manager.setLegacy(true);
-        Logger logger = manager.getLogger(context);
+        final Logger logger = manager.getLogger(context);
 
         // Example of log calls
         logger.fatal(data.set(LoggerTest.class, numbers, new Date(0)), e);
@@ -141,28 +139,29 @@ public class LoggerTest {
 
         logger.trace(data, e);
 
-        byte[] bytes = manager.getBytes();
+        final byte[] bytes = manager.getBytes();
         Assert.assertTrue(bytes.length > 0, "size should bigger than zero");
 
-    Schema schema = new Schema.Parser().parse(LogPage.SCHEMA_STR);
-        String json = binaryToJson(bytes, "--no-pretty", schema.toString());
+        final Schema schema = new Schema.Parser().parse(LogPage.SCHEMA_STR);
+        final String json = binaryToJson(bytes, "--no-pretty", schema.toString());
         System.out.println(json);
 
-        String s="{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":1,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest [10, 20] Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":3,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 16:15:12 Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":2,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 16:15:12 Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":4,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 16:15:12 Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n";
+        final String s = "{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":1,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest [10, 20] Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":3,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 16:15:12 Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":2,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 16:15:12 Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":4,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 16:15:12 Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n";
         // TODO Fix me
-        //Assert.assertEquals(json, s, "expect: " + json + "\n But got: " + s);
+        Assert.assertEquals(json, s, "expect: " + json + "\n But got: " + s);
     }
 
     @Test
     public void testBasicExample() throws UnsupportedEncodingException, Exception {
-        LogManager manager = new LogManager();
+        final LogManager manager = new LogManager();
         // utility to serialize data
-        LogDataUtil data = new LogDataUtil();
-        LogContext context = new LogContext("email=123@lafaspot.com"){};
-        Logger logger = manager.getLogger(context);
+        final LogDataUtil data = new LogDataUtil();
+        final LogContext context = new LogContext("email=123@lafaspot.com") {
+        };
+        final Logger logger = manager.getLogger(context);
 
         // some exception to log with stack
-        Exception e = new Exception();
+        final Exception e = new Exception();
         e.fillInStackTrace();
 
         // Example of a log call
@@ -171,7 +170,7 @@ public class LoggerTest {
         }
 
         // This is not part of the example
-        byte[] bytes = manager.getBytes();
+        final byte[] bytes = manager.getBytes();
         Assert.assertTrue(bytes.length > 0, "size should bigger than zero");
     }
 
@@ -190,16 +189,16 @@ public class LoggerTest {
     }
 
     private String binaryToJson(final byte[] avro, final String... options) throws UnsupportedEncodingException, Exception {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream p = new PrintStream(new BufferedOutputStream(baos));
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final PrintStream p = new PrintStream(new BufferedOutputStream(baos));
 
-        List<String> args = new ArrayList<String>();
+        final List<String> args = new ArrayList<String>();
         args.addAll(Arrays.asList(options));
         args.add("-");
         new BinaryFragmentToJsonTool().run(new ByteArrayInputStream(avro), // stdin
-                p, // stdout
-                null, // stderr
-                args);
+                        p, // stdout
+                        null, // stderr
+                        args);
         return baos.toString("utf-8").replace("\r", "");
 
     }
