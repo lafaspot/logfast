@@ -41,7 +41,7 @@ public class Logger {
 
         /**
          * Return the log level corresponding to the integer value passed in as {@code numeric}.
-         * 
+         *
          * @param numeric the numeric value for which the log level needs to be returned.
          * @return the log level corresponding to the numeric value passed in. Returns the default level if the numeric value does not correspond to a log level.
          */
@@ -49,23 +49,23 @@ public class Logger {
             switch(numeric) {
             case FATALINT:
                 return FATAL;
-                
+           
             case ERRORINT:
                 return ERROR;
-                
+           
             case WARNINT:
                 return WARN;
-                
+           
             case INFOINT:
                 return INFO;
-                
+           
             case DEBUGINT:
                 return DEBUG;
-                
+           
             case TRACEINT:
                 return TRACE;
             }
-            
+       
             return INFO;
         }
 

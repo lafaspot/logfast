@@ -23,7 +23,7 @@ import com.lafaspot.logfast.logging.internal.LogPage;
 
 /**
  * Logger testcases
- * 
+ *
  * @author lafa
  *
  */
@@ -174,7 +174,7 @@ public class LoggerTest {
         byte[] bytes = manager.getBytes();
         Assert.assertTrue(bytes.length > 0, "size should bigger than zero");
     }
-    
+
     /**
      * Tests the level.
      */
