@@ -144,7 +144,7 @@ public class LoggerTest {
         byte[] bytes = manager.getBytes();
         Assert.assertTrue(bytes.length > 0, "size should bigger than zero");
 
-        Schema schema = new Schema.Parser().parse(LogPage.schemaStr);
+    Schema schema = new Schema.Parser().parse(LogPage.SCHEMA_STR);
         String json = binaryToJson(bytes, "--no-pretty", schema.toString());
         System.out.println(json);
 
