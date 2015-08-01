@@ -29,6 +29,10 @@
 		<url>https://github.com/lafa/logfast.git</url>
 		<tag>logfast-1.0</tag>
 	</scm>
+	<issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/lafaspot/jconfig/issues</url>
+    </issueManagement>
 
 
 	<licenses>
