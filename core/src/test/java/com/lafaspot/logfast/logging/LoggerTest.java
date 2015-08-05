@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -150,8 +151,8 @@ public class LoggerTest {
         final Logger logger = manager.getLogger(context);
 
         // Example of log calls
-        logger.fatal(data.set(LoggerTest.class, numbers, new Date(0)), e);
-        logger.warn(data.set(LoggerTest.class, new Time(912398), new Date(0)), e);
+        logger.fatal(data.set(LoggerTest.class, numbers, new Long(5)), e);
+        logger.warn(data.set(LoggerTest.class, new BigInteger("912398"), new Double(0.5)), e);
         logger.error(data, e);
         logger.info(data, e);
 
@@ -167,8 +168,7 @@ public class LoggerTest {
         final Schema schema = new Schema.Parser().parse(LogPage.SCHEMA_STR);
         final String json = binaryToJson(bytes, "--no-pretty", schema.toString());
         @SuppressWarnings("checkstyle:linelength")
-        final String s = "{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":1,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest [10, 20] Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":3,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 16:15:12 Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":2,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 16:15:12 Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":4,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 16:15:12 Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n";
-        // TODO Fix me
+        String s = "{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":1,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest [10, 20] 5\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":3,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 912398 0.5\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":2,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 912398 0.5\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":4,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 912398 0.5\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n";
         Assert.assertEquals(json, s, "expect: " + json + "\n But got: " + s);
     }
 
