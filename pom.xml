@@ -23,17 +23,18 @@
             <email>luis.alves@lafaspot.com</email>
         </developer>
     </developers>
+    
     <scm>
         <developerConnection>scm:git:https://github.com/lafa/logfast.git</developerConnection>
         <connection>scm:git:https://github.com/lafa/logfast.git</connection>
         <url>https://github.com/lafa/logfast.git</url>
         <tag>logfast-1.0</tag>
     </scm>
+    
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/lafaspot/jconfig/issues</url>
+        <url>https://github.com/lafaspot/logfast/issues</url>
     </issueManagement>
-
 
     <licenses>
         <license>
@@ -71,9 +72,11 @@
         <testTimeLimitInSeconds>0</testTimeLimitInSeconds>
         <main.basedir>${project.basedir}</main.basedir>
     </properties>
+    
     <dependencies>
         <!-- DO NOT ADD DEPENDENCIES TO THIS FILE -->
     </dependencies>
+    
     <dependencyManagement>
         <dependencies>
             <!-- Test dependencies -->
@@ -129,6 +132,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    
     <build>
         <finalName>${project.artifactId}</finalName>
         <extensions>
@@ -441,12 +445,6 @@
                             <consoleOutput>true</consoleOutput>
                             <linkXRef>false</linkXRef>
                             <configLocation>checkstyle.xml</configLocation>
-                            <!-- 
-                            <violationSeverity>error</violationSeverity>
-                            <logViolationsToConsole>true</logViolationsToConsole>
-                            <failOnViolation>true</failOnViolation>
-                            <violationSeverity>warning</violationSeverity>
-                             -->
                             <consoleOutput>true</consoleOutput>
                             <failsOnError>true</failsOnError>
                             <includeTestSourceDirectory>true</includeTestSourceDirectory>
