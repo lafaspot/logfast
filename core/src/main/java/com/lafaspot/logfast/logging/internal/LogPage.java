@@ -76,7 +76,7 @@ public class LogPage {
      * @param isDumpStackOn
      *            is true to enable dumping stack in the logs
      */
-    public void log(final LogContext context, final int level, final Object data, final Exception cause, final boolean isDumpStackOn) {
+    public void log(final LogContext context, final int level, final Object data, final Throwable cause, final boolean isDumpStackOn) {
         // reset log record
         record.put("name", context.toString());
         record.put("level", level);

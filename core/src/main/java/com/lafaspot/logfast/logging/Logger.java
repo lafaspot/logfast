@@ -181,7 +181,7 @@ public class Logger {
      * @param e
      *            exception
      */
-    public void error(final Object data, final Exception e) {
+    public void error(final Object data, final Throwable e) {
         log(Logger.ERRORINT, data, e);
     }
 
@@ -191,7 +191,7 @@ public class Logger {
      * @param e
      *            exception
      */
-    public void warn(final Object data, final Exception e) {
+    public void warn(final Object data, final Throwable e) {
         log(Logger.WARNINT, data, e);
     }
 
@@ -201,7 +201,7 @@ public class Logger {
      * @param e
      *            exception
      */
-    public void info(final Object data, final Exception e) {
+    public void info(final Object data, final Throwable e) {
         log(Logger.INFOINT, data, e);
     }
 
@@ -211,7 +211,7 @@ public class Logger {
      * @param e
      *            exception
      */
-    public void debug(final Object data, final Exception e) {
+    public void debug(final Object data, final Throwable e) {
         log(Logger.DEBUGINT, data, e);
     }
 
@@ -221,7 +221,7 @@ public class Logger {
      * @param e
      *            exception
      */
-    public void fatal(final Object data, final Exception e) {
+    public void fatal(final Object data, final Throwable e) {
         log(Logger.FATALINT, data, e);
     }
 
@@ -231,11 +231,11 @@ public class Logger {
      * @param e
      *            exception
      */
-    public void trace(final Object data, final Exception e) {
+    public void trace(final Object data, final Throwable e) {
         log(Logger.TRACEINT, data, e);
     }
 
-    private void log(final int level, final Object data, final Exception e) {
+    private void log(final int level, final Object data, final Throwable e) {
         if (level <= curLevel && context != null && data != null) {
             rotate();
             if (legacy) {
