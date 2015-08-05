@@ -5,7 +5,7 @@
     <groupId>com.github.lafa.logfast</groupId>
     <artifactId>logfast</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <name>${project.artifactId}</name>
     <url>https://github.com/lafa/logfast</url>
     <description>Parent POM file for logfast project</description>
@@ -23,14 +23,14 @@
             <email>luis.alves@lafaspot.com</email>
         </developer>
     </developers>
-    
+
     <scm>
         <developerConnection>scm:git:https://github.com/lafa/logfast.git</developerConnection>
         <connection>scm:git:https://github.com/lafa/logfast.git</connection>
         <url>https://github.com/lafa/logfast.git</url>
         <tag>logfast-1.0</tag>
     </scm>
-    
+
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/lafaspot/logfast/issues</url>
@@ -72,11 +72,11 @@
         <testTimeLimitInSeconds>0</testTimeLimitInSeconds>
         <main.basedir>${project.basedir}</main.basedir>
     </properties>
-    
+
     <dependencies>
         <!-- DO NOT ADD DEPENDENCIES TO THIS FILE -->
     </dependencies>
-    
+
     <dependencyManagement>
         <dependencies>
             <!-- Test dependencies -->
@@ -106,21 +106,6 @@
                 <version>1.7.12</version>
             </dependency>
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.12</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>1.1.3</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-core</artifactId>
-                <version>1.1.3</version>
-            </dependency>
-            <dependency>
                 <groupId>com.google.code.findbugs</groupId>
                 <artifactId>jsr305</artifactId>
                 <version>1.3.9</version>
@@ -132,7 +117,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <build>
         <finalName>${project.artifactId}</finalName>
         <extensions>

@@ -9,6 +9,7 @@ import com.lafaspot.logfast.logging.internal.LogPage;
 
 /**
  * Log Manager.
+ *
  * @author lafa
  *
  */

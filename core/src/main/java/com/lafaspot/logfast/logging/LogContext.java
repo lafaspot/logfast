@@ -34,7 +34,7 @@ public abstract class LogContext {
     }
 
     /**
-     * Return the context serialize to a String object. Sub classes should overwrite this method.
+     * Return the context serialized to a String object. Sub classes should overwrite this method.
      *
      * @return a string with a serialized version that is going to be written to a log
      */
