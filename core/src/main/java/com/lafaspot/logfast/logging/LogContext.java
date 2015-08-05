@@ -15,6 +15,10 @@ public abstract class LogContext {
     private final String serial;
     private final String name;
 
+    /**
+     * @param name
+     *            Look up log context name
+     */
     public LogContext(final String name) {
         this.name = name;
         serial = getSerial();
@@ -40,7 +44,7 @@ public abstract class LogContext {
 
     /*
      * Returns the cached version of the serialization of the context performed by the getSerial method.
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override

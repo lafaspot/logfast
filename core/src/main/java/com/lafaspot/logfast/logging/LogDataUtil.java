@@ -4,7 +4,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 /**
  * Utility class used to facilitate logging.
- * 
+ *
  * @author lafa
  *
  */
@@ -15,6 +15,14 @@ public class LogDataUtil {
     private Class<?> clazz;
     private Object[] arguments;
 
+
+    /**
+     * @param clazz
+     *            Class to be used on the logger
+     * @param arguments
+     *            objects that implement the logger interface or toString method
+     * @return itself
+     */
     public LogDataUtil set(final Class<?> clazz, final Object... arguments) {
         this.clazz = clazz;
         this.arguments = arguments;

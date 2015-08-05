@@ -10,6 +10,10 @@ import com.lafaspot.logfast.logging.internal.LogPage;
  *
  * @author lafa
  */
+/**
+ * @author lafa
+ *
+ */
 @NotThreadSafe
 public class Logger {
     // int values for faster speed
@@ -27,12 +31,44 @@ public class Logger {
      *
      */
     public static enum Level {
-        FATAL(FATALINT), ERROR(ERRORINT), WARN(WARNINT), INFO(INFOINT), DEBUG(DEBUGINT), TRACE(TRACEINT);
+
+        /**
+         * fatal.
+         */
+        FATAL(FATALINT),
+
+        /**
+         * error.
+         */
+        ERROR(ERRORINT),
+
+        /**
+         * warn.
+         */
+        WARN(WARNINT),
+
+        /**
+         * info.
+         */
+        INFO(INFOINT),
+
+        /**
+         * debug.
+         */
+        DEBUG(DEBUGINT),
+
+        /**
+         * trace.
+         */
+        TRACE(TRACEINT);
 
         private Level(final int numeric) {
             this.numeric = numeric;
         }
 
+        /**
+         * @return the Level numeric value
+         */
         public int getNumeric() {
             return numeric;
         }
@@ -64,9 +100,9 @@ public class Logger {
 
             case TRACEINT:
                 return TRACE;
+            default:
+                return INFO;
             }
-
-            return INFO;
         }
 
         private int numeric;
@@ -82,10 +118,17 @@ public class Logger {
     private volatile int curLevel;
     private final boolean isDumpStackOn;
 
+    /**
+     * @return log level
+     */
     public int getLevel() {
         return curLevel;
     }
 
+    /**
+     * @param level
+     *            log level
+     */
     public void setLevel(final Level level) {
         curLevel = level.getNumeric();
     }
@@ -132,26 +175,62 @@ public class Logger {
         }
     }
 
+    /**
+     * @param data
+     *            log data object
+     * @param e
+     *            exception
+     */
     public void error(final Object data, final Exception e) {
         log(Logger.ERRORINT, data, e);
     }
 
+    /**
+     * @param data
+     *            log data object
+     * @param e
+     *            exception
+     */
     public void warn(final Object data, final Exception e) {
         log(Logger.WARNINT, data, e);
     }
 
+    /**
+     * @param data
+     *            log data object
+     * @param e
+     *            exception
+     */
     public void info(final Object data, final Exception e) {
         log(Logger.INFOINT, data, e);
     }
 
+    /**
+     * @param data
+     *            log data object
+     * @param e
+     *            exception
+     */
     public void debug(final Object data, final Exception e) {
         log(Logger.DEBUGINT, data, e);
     }
 
+    /**
+     * @param data
+     *            log data object
+     * @param e
+     *            exception
+     */
     public void fatal(final Object data, final Exception e) {
         log(Logger.FATALINT, data, e);
     }
 
+    /**
+     * @param data
+     *            log data object
+     * @param e
+     *            exception
+     */
     public void trace(final Object data, final Exception e) {
         log(Logger.TRACEINT, data, e);
     }
@@ -166,26 +245,44 @@ public class Logger {
         }
     }
 
+    /**
+     * @return true if level is on
+     */
     public boolean isFatal() {
         return isLevel(Logger.FATALINT);
     }
 
+    /**
+     * @return true if level is on
+     */
     public boolean isError() {
         return isLevel(Logger.ERRORINT);
     }
 
+    /**
+     * @return true if level is on
+     */
     public boolean isWarn() {
         return isLevel(Logger.WARNINT);
     }
 
+    /**
+     * @return true if level is on
+     */
     public boolean isInfo() {
         return isLevel(Logger.INFOINT);
     }
 
+    /**
+     * @return true if level is on
+     */
     public boolean isDebug() {
         return isLevel(Logger.DEBUGINT);
     }
 
+    /**
+     * @return true if level is on
+     */
     public boolean isTrace() {
         return isLevel(Logger.TRACEINT);
     }
@@ -195,7 +292,7 @@ public class Logger {
     }
 
     /**
-     * Call this in case the logger is not going to be used any more or for a long time
+     * Call this in case the logger is not going to be used any more or for a long time.
      */
     public void flush() {
         for (int i = 0; i < pages.length; i++) {

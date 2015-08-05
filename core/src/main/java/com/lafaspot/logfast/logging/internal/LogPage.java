@@ -36,6 +36,10 @@ public class LogPage {
     private final Encoder encoder;
     private final Record record;
 
+    /**
+     * @param pageSize
+     *            szie for this page
+     */
     public LogPage(final int pageSize) {
         this.pageSize = pageSize;
         ostream = new ByteArrayOutputStream(pageSize);
@@ -45,15 +49,33 @@ public class LogPage {
         record = new GenericData.Record(schema);
     }
 
+    /**
+     * avro schema as a String.
+     */
     public static final String SCHEMA_STR = "{ \"type\":\"record\", \"namespace\":\"com.lafaspot.logfast.logging\", "
                     + "\"name\":\"LogRecord\", \"fields\":[ " + "{ \"name\":\"name\", \"type\":\"string\", \"default\":\"\" },"
                     + "{ \"name\":\"level\", \"type\":\"int\", \"default\":-1 }," + "{ \"name\":\"data\", \"type\":\"string\", \"default\":\"\" },"
                     + "{ \"name\":\"eMessages\", \"type\":\"string\", \"default\":\"\" },"
                     + "{ \"name\":\"eStackTrace\", \"type\":\"string\", \"default\":\"\"}" + "] }";
 
+    /**
+     * Default page size.
+     */
     public static final int DEFAULT_SIZE = 10;
     private static final int EXCEPTION_DEPTH = 10;
 
+    /**
+     * @param context
+     *            - the LogContext
+     * @param level
+     *            the default log level for this page
+     * @param data
+     *            the object obect to be logged
+     * @param cause
+     *            exception that create the problem
+     * @param isDumpStackOn
+     *            is true to enable dumping stack in the logs
+     */
     public void log(final LogContext context, final int level, final Object data, final Exception cause, final boolean isDumpStackOn) {
         // reset log record
         record.put("name", context.toString());
@@ -103,10 +125,16 @@ public class LogPage {
         }
     }
 
+    /**
+     * @return if the page is full
+     */
     public boolean isFull() {
         return isFull;
     }
 
+    /**
+     * @return the bytes of the log page
+     */
     public byte[] getBytes() {
         try {
             encoder.flush();
@@ -116,6 +144,9 @@ public class LogPage {
         return ostream.toByteArray();
     }
 
+    /**
+     *
+     */
     public void reset() {
         try {
             encoder.flush();
