@@ -28,6 +28,7 @@ import com.lafaspot.logfast.logging.internal.LogPage;
  *
  */
 public class LoggerTest {
+
     private LogContext context2;
     private ArrayList<Integer> numbers2;
     private Exception e2;
@@ -35,6 +36,9 @@ public class LoggerTest {
     private LogManager manager2;
     private Logger logger2;
 
+    /**
+     *
+     */
     @BeforeClass
     public void init() {
         context2 = new LogContext("email=123@lafaspot.com") {
@@ -67,6 +71,9 @@ public class LoggerTest {
         logger2.flush();
     }
 
+    /**
+     *
+     */
     @Test(threadPoolSize = 1, invocationCount = 40, enabled = true)
     public void testLoggerSpeed() {
         final Logger logger3 = manager2.getLogger(context2);
@@ -75,6 +82,9 @@ public class LoggerTest {
         }
     }
 
+    /**
+     *
+     */
     @Test(threadPoolSize = 1, invocationCount = 40, enabled = true)
     public void testLoggerSpeedInactive() {
         final Logger logger3 = manager2.getLogger(context2);
@@ -83,6 +93,9 @@ public class LoggerTest {
         }
     }
 
+    /**
+     *
+     */
     @Test(threadPoolSize = 1, invocationCount = 40, enabled = false)
     public void testLoggerSpeedLegacy() {
         final org.slf4j.Logger loggerLegacy = LoggerFactory.getLogger(LoggerTest.class);
@@ -91,6 +104,9 @@ public class LoggerTest {
         }
     }
 
+    /**
+     *
+     */
     @Test(threadPoolSize = 1, invocationCount = 40, enabled = true)
     public void testLoggerSpeedInactiveLegacy() {
         final org.slf4j.Logger loggerLegacy = LoggerFactory.getLogger(LoggerTest.class);
@@ -99,6 +115,12 @@ public class LoggerTest {
         }
     }
 
+    /**
+     * @throws UnsupportedEncodingException
+     *             failure
+     * @throws Exception
+     *             failure
+     */
     @Test
     public void testMemoryLogger() throws UnsupportedEncodingException, Exception {
         final LogContext context = new LogContext("email=123@lafaspot.com") {
@@ -144,13 +166,18 @@ public class LoggerTest {
 
         final Schema schema = new Schema.Parser().parse(LogPage.SCHEMA_STR);
         final String json = binaryToJson(bytes, "--no-pretty", schema.toString());
-        System.out.println(json);
-
+        @SuppressWarnings("checkstyle:linelength")
         final String s = "{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":1,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest [10, 20] Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":3,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 16:15:12 Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":2,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 16:15:12 Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":4,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 16:15:12 Wed Dec 31 16:00:00 PST 1969\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n";
         // TODO Fix me
         Assert.assertEquals(json, s, "expect: " + json + "\n But got: " + s);
     }
 
+    /**
+     * @throws UnsupportedEncodingException
+     *             failure
+     * @throws Exception
+     *             failure
+     */
     @Test
     public void testBasicExample() throws UnsupportedEncodingException, Exception {
         final LogManager manager = new LogManager();
