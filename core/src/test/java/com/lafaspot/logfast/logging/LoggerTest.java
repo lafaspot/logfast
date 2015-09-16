@@ -75,6 +75,15 @@ public class LoggerTest {
     /**
      *
      */
+    @Test
+    public void testLoggerNullException() {
+        final Logger logger3 = manager2.getLogger(context2);
+        logger3.info(data2, null);
+    }
+
+    /**
+     *
+     */
     @Test(threadPoolSize = 1, invocationCount = 40, enabled = true)
     public void testLoggerSpeed() {
         final Logger logger3 = manager2.getLogger(context2);
@@ -168,7 +177,7 @@ public class LoggerTest {
         final Schema schema = new Schema.Parser().parse(LogPage.SCHEMA_STR);
         final String json = binaryToJson(bytes, "--no-pretty", schema.toString());
         @SuppressWarnings("checkstyle:linelength")
-        String s = "{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":1,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest [10, 20] 5\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":3,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 912398 0.5\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":2,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 912398 0.5\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":4,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 912398 0.5\",\"eMessages\":\"[java.lang.Exception, null],\",\"eStackTrace\":\"stack trace here\"}\n";
+        String s = "{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":1,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest [10, 20] 5\",\"eMessages\":{\"string\":\"[java.lang.Exception, null],\"},\"eStackTrace\":{\"string\":\"stack trace here\"}}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":3,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 912398 0.5\",\"eMessages\":{\"string\":\"[java.lang.Exception, null],\"},\"eStackTrace\":{\"string\":\"stack trace here\"}}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":2,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 912398 0.5\",\"eMessages\":{\"string\":\"[java.lang.Exception, null],\"},\"eStackTrace\":{\"string\":\"stack trace here\"}}\n{\"name\":\"{sledid=1291298/email=123@lafaspot.com}\",\"level\":4,\"data\":\"class com.lafaspot.logfast.logging.LoggerTest 912398 0.5\",\"eMessages\":{\"string\":\"[java.lang.Exception, null],\"},\"eStackTrace\":{\"string\":\"stack trace here\"}}\n";
         Assert.assertEquals(json, s, "expect: " + json + "\n But got: " + s);
     }
 

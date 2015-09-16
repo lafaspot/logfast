@@ -55,8 +55,8 @@ public class LogPage {
     public static final String SCHEMA_STR = "{ \"type\":\"record\", \"namespace\":\"com.lafaspot.logfast.logging\", "
                     + "\"name\":\"LogRecord\", \"fields\":[ " + "{ \"name\":\"name\", \"type\":\"string\", \"default\":\"\" },"
                     + "{ \"name\":\"level\", \"type\":\"int\", \"default\":-1 }," + "{ \"name\":\"data\", \"type\":\"string\", \"default\":\"\" },"
-                    + "{ \"name\":\"eMessages\", \"type\":\"string\", \"default\":\"\" },"
-                    + "{ \"name\":\"eStackTrace\", \"type\":\"string\", \"default\":\"\"}" + "] }";
+                    + "{ \"name\":\"eMessages\", \"type\":[ \"string\", \"null\"], \"default\":\"\" },"
+                    + "{ \"name\":\"eStackTrace\", \"type\":[ \"string\", \"null\"], \"default\":\"\"}" + "] }";
 
     /**
      * Default page size.
