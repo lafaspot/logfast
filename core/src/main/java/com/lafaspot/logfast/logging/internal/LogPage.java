@@ -35,18 +35,28 @@ public class LogPage {
     private final GenericDatumWriter<GenericRecord> writer;
     private final Encoder encoder;
     private final Record record;
+    private LogPageRef nextPageRef;
+    private boolean isActive;
+    private long identifier;
 
     /**
+     * @param pageId
+     *            Page Unique Identifier
      * @param pageSize
-     *            szie for this page
+     *            Max memory size for this page
+     * @param nextPageRef
+     *            Page reference for the the last full page related to this one
      */
-    public LogPage(final int pageSize) {
+    public LogPage(final long pageId, final int pageSize, final LogPageRef nextPageRef) {
         this.pageSize = pageSize;
+        identifier = pageId;
         ostream = new ByteArrayOutputStream(pageSize);
         schema = new Schema.Parser().parse(SCHEMA_STR);
         writer = new GenericDatumWriter<GenericRecord>(schema);
         encoder = EncoderFactory.get().directBinaryEncoder(ostream, null);
         record = new GenericData.Record(schema);
+        this.nextPageRef = nextPageRef;
+        isActive = true;
     }
 
     /**
@@ -147,7 +157,7 @@ public class LogPage {
     /**
      *
      */
-    public void reset() {
+    public void setNotActive() {
         try {
             encoder.flush();
         } catch (final IOException e) {
@@ -155,5 +165,59 @@ public class LogPage {
         }
         ostream.reset();
         isFull = false;
+        isActive = false;
+        nextPageRef = LogPageRef.NULL;
+    }
+
+    /**
+     * Return the next page or null.
+     *
+     * @return a LogPageRef to the next page
+     */
+    public LogPageRef getNextPage() {
+        return nextPageRef;
+    }
+
+    /**
+     * Visit all current pages and clean references below maxPages and reset the LogPages that are unreferenced.
+     *
+     * @param maxPages
+     *            Number of page to keep
+     */
+    public void removePageRefAboveLimit(final int maxPages) {
+        LogPage nPage = nextPageRef.get();
+        // Visit all current pages
+        if (nPage != null) {
+            nPage.removePageRefAboveLimit(maxPages - 1);
+        }
+        // clean references below maxPages and reset the LogPage
+        if (maxPages < 0) {
+            nextPageRef.clear();
+            nPage.setNotActive();
+        }
+    }
+
+    /**
+     *
+     * @param nextPageRef
+     *            reconfigure the page to be active again, so it can be reused
+     */
+    public void setActive(final LogPageRef nextPageRef) {
+        this.nextPageRef = nextPageRef;
+        isActive = true;
+    }
+
+    /**
+     * @return If this page is still active returns true otherwise false
+     */
+    public boolean isActive() {
+        return isActive;
+    }
+
+    /**
+     * @return Return the Page Unique Identifier
+     */
+    public Long getIdentifier() {
+        return identifier;
     }
 }

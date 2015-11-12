@@ -3,6 +3,7 @@ package com.lafaspot.logfast.logging;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.lafaspot.logfast.logging.internal.LogPage;
+import com.lafaspot.logfast.logging.internal.LogPageRef;
 
 /**
  * Logger is a implementation to be used in multi-threaded application. The main goal of this Logger is to reduce log contention between threads and
@@ -108,11 +109,9 @@ public class Logger {
         private int numeric;
     }
 
-    private static final int PAGE_SIZE = 3;
     private final org.slf4j.Logger logger;
     private final LogManager manager;
-    private final LogPage[] pages = new LogPage[PAGE_SIZE];
-    private int active;
+    private LogPageRef currentPageRef;
     private final LogContext context;
     private final boolean legacy;
     private volatile int curLevel;
@@ -148,30 +147,21 @@ public class Logger {
         this.manager = manager;
         this.context = context;
         legacy = manager.isLegacy();
-        active = -1;
         curLevel = level.getNumeric();
         isDumpStackOn = manager.isDumpStackOn();
+        currentPageRef = LogPageRef.NULL;
     }
 
     private void rotate() {
-        if (active == -1) {
-            active = 0;
-            for (int i = 0; i < pages.length; i++) {
-                pages[i] = manager.allocPage(this, context);
-            }
-            return;
+        LogPage page = currentPageRef.get();
+        if (page == null) {
+            currentPageRef = manager.allocPage(this, context);
+            page = currentPageRef.get();
         }
-        if (pages[active].isFull()) {
-            manager.returnPage(this, context, pages[active]);
-            pages[active] = null;
-            active++;
-            // Get more pages to work on
-            if (active > PAGE_SIZE) {
-                for (int i = 0; i < pages.length; i++) {
-                    pages[i] = manager.allocPage(this, context);
-                }
-                active = 0;
-            }
+
+        if (page != null && page.isFull()) {
+            manager.returnPage(this, context, currentPageRef);
+            currentPageRef = manager.allocPage(this, context);
         }
     }
 
@@ -238,10 +228,14 @@ public class Logger {
     private void log(final int level, final Object data, final Throwable e) {
         if (level <= curLevel && context != null && data != null) {
             rotate();
-            if (legacy) {
-                logger.debug(context.toString() + " " + data.toString(), e);
+            // No LogPage no logs. Be fast in case LogPages are not available.
+            LogPage page = currentPageRef.get();
+            if (page != null) {
+                if (legacy) {
+                    logger.debug(context.toString() + " " + data.toString(), e);
+                }
+                page.log(context, level, data, e, isDumpStackOn);
             }
-            pages[active].log(context, level, data, e, isDumpStackOn);
         }
     }
 
@@ -295,11 +289,18 @@ public class Logger {
      * Call this in case the logger is not going to be used any more or for a long time.
      */
     public void flush() {
-        for (int i = 0; i < pages.length; i++) {
-            manager.returnPage(this, context, pages[i]);
-            pages[i] = null;
-            active = -1;
-        }
+        currentPageRef = LogPageRef.NULL;
+        manager.returnPage(this, context, currentPageRef);
+    }
+
+    protected LogPageRef getCurrentPage() {
+        return currentPageRef;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        flush();
     }
 
 }
