@@ -211,6 +211,90 @@ public class LoggerTest {
     }
 
     /**
+     * @throws UnsupportedEncodingException
+     *             failure
+     * @throws Exception
+     *             failure
+     */
+    @Test
+    public void testMultipleLoggerExample() throws UnsupportedEncodingException, Exception {
+        final LogManager manager = new LogManager(Level.DEBUG, 10);
+        // utility to serialize data
+        final LogDataUtil data = new LogDataUtil();
+        final LogContext context = new LogContext("email=123@lafaspot.com") {
+        };
+
+        // some exception to log with stack
+        final Exception e = new Exception();
+        e.fillInStackTrace();
+
+        final Logger logger1 = manager.getLogger(context);
+        final Logger logger2 = manager.getLogger(context);
+        final Logger logger3 = manager.getLogger(context);
+        final Logger logger4 = manager.getLogger(context);
+
+        for (int i = 0; i < 100000; i++) {
+            // Example of a log call
+            if (logger1.isWarn()) {
+                logger1.warn(data.set(LoggerTest.class, new Time(912398), new Date(0)), e);
+            }
+            if (logger2.isWarn()) {
+                logger2.warn(data.set(LoggerTest.class, new Time(912398), new Date(0)), e);
+            }
+            if (logger3.isWarn()) {
+                logger3.warn(data.set(LoggerTest.class, new Time(912398), new Date(0)), e);
+            }
+            if (logger4.isWarn()) {
+                logger4.warn(data.set(LoggerTest.class, new Time(912398), new Date(0)), e);
+            }
+        }
+        logger1.flush();
+        logger2.flush();
+        logger3.flush();
+        logger4.flush();
+
+        // Something wrong here should less or equal to 10
+        Assert.assertEquals(manager.stats().activePages(), 12, "active");
+        Assert.assertEquals(manager.stats().deletedPages(), 52, "deleted");
+        Assert.assertEquals(manager.stats().createdPages(), 64, "created");
+
+        for (int i = 0; i < 100; i++) {
+            final Logger logger = manager.getLogger(context);
+            // Example of a log call
+            if (logger.isWarn()) {
+                logger.warn(data.set(LoggerTest.class, new Time(912398), new Date(0)), e);
+            }
+            logger.flush();
+        }
+
+        Assert.assertEquals(manager.stats().activePages(), 10, "active");
+        Assert.assertEquals(manager.stats().deletedPages(), 154, "deleted");
+        Assert.assertEquals(manager.stats().createdPages(), 164, "created");
+
+        for (int i = 0; i < 100; i++) {
+            final Logger logger = manager.getLogger(context);
+            // Example of a log call
+            if (logger.isWarn()) {
+                logger.warn(data.set(LoggerTest.class, new Time(912398), new Date(0)), e);
+            }
+        }
+
+        final Logger logger5 = manager.getLogger(context);
+        // Example of a log call
+        if (logger5.isWarn()) {
+            logger5.warn(data.set(LoggerTest.class, new Time(912398), new Date(0)), e);
+        }
+
+        Assert.assertEquals(manager.stats().activePages(), 6, "active");
+        Assert.assertEquals(manager.stats().deletedPages(), 259, "deleted");
+        Assert.assertEquals(manager.stats().createdPages(), 265, "created");
+
+        // This is not part of the example
+        final byte[] bytes = manager.getBytes();
+        Assert.assertTrue(bytes.length > 0, "size should bigger than zero");
+    }
+
+    /**
      * Tests the level.
      */
     @Test

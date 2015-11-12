@@ -33,8 +33,15 @@ public class LogManager {
     private final int maxSize;
 
     private static final int MAX_LOGGER_PAGES = 3;
+    private static final int MIN_PAGE_SIZE = 0;
 
-    private AtomicLong pageId = new AtomicLong(0);
+    private final PagePredicate cleanUnused = new PagePredicate();
+
+    private final AtomicLong createdPages = new AtomicLong(0);
+
+    private final AtomicLong deletedPages = new AtomicLong(0);
+
+    private final AtomicLong lastPageSize = new AtomicLong(0);
 
     /**
      * Create a log manager instance with level set to Level.INFO.
@@ -49,12 +56,16 @@ public class LogManager {
      * @param level
      *            log level
      * @param size
-     *            page size
+     *            page size, mininum value is 10 pages
      */
     public LogManager(final Level level, final int size) {
         this.level = level;
         isLegacy = false;
-        this.maxSize = size;
+        if (size < MIN_PAGE_SIZE) {
+            this.maxSize = MIN_PAGE_SIZE;
+        } else {
+            this.maxSize = size;
+        }
         pages = new ConcurrentSkipListSet<LogPageRef>();
     }
 
@@ -94,11 +105,13 @@ public class LogManager {
      * @return page
      */
     LogPageRef allocPage(final Logger logger, final LogContext context) {
-        long size = pageId.get();
-        if (size > maxSize && (pageId.compareAndSet(size, 0))) {
+        long lastSize = lastPageSize.get();
+        long currentSize = createdPages.get();
+        long size = currentSize - lastSize;
+        if (size > maxSize && (lastPageSize.compareAndSet(lastSize, currentSize))) {
             cleanPages();
         }
-        final LogPage page = new LogPage(pageId.incrementAndGet(), SIZE, logger.getCurrentPage());
+        final LogPage page = new LogPage(createdPages.incrementAndGet(), SIZE, logger.getCurrentPage());
         page.removePageRefAboveLimit(MAX_LOGGER_PAGES);
         LogPageRef pageRef = new LogPageRef(page);
         pages.add(pageRef);
@@ -110,22 +123,43 @@ public class LogManager {
         public boolean test(final LogPageRef pageRef) {
             LogPage page = pageRef.get();
             // remove page reference if page is null or the page is full
-            if (page != null) {
-                if (page.isFull()) {
-                    // Clear the reference if page is full
-                    pageRef.clear();
-                    return true;
-                }
+            if (page != null && !page.isFull()) {
                 return false;
             }
+            pageRef.clear();
+            deletedPages.getAndIncrement();
             return true;
         }
     }
 
-    private PagePredicate cleanUnused = new PagePredicate();
+    private class PageRemoveByIdPredicate implements Predicate<LogPageRef> {
+        private long minPageId;
+
+        public PageRemoveByIdPredicate(final long minPageId) {
+            this.minPageId = minPageId;
+        }
+
+        @Override
+        public boolean test(final LogPageRef pageRef) {
+
+            LogPage page = pageRef.get();
+            // remove page reference if page is null or the page is full
+            if (page != null && page.getIdentifier() > minPageId) {
+                return false;
+            }
+            pageRef.clear();
+            deletedPages.getAndIncrement();
+            return true;
+        }
+    }
 
     private void cleanPages() {
         pages.removeIf(cleanUnused);
+        long size = createdPages.get() - deletedPages.get();
+        if (size >= maxSize) {
+            // No more memory release 50% of the active pages
+            pages.removeIf(new PageRemoveByIdPredicate(createdPages.get() - (maxSize / 2)));
+        }
     }
 
     /**
@@ -180,6 +214,50 @@ public class LogManager {
      */
     public void setLegacy(final boolean isLegacy) {
         this.isLegacy = isLegacy;
+    }
+
+    /**
+     * @author lafa
+     *
+     */
+    public static class Stats {
+        private final LogManager manager;
+
+        /**
+         * @param manager
+         *            the LogManager
+         */
+        public Stats(final LogManager manager) {
+            this.manager = manager;
+        }
+
+        /**
+         * @return current active pages
+         */
+        public long activePages() {
+            return manager.pages.size();
+        }
+
+        /**
+         * @return deleted pages
+         */
+        public long deletedPages() {
+            return manager.deletedPages.get();
+        }
+
+        /**
+         * @return total created pages
+         */
+        public long createdPages() {
+            return manager.createdPages.get();
+        }
+    }
+
+    /**
+     * @return the stats for this manager instance
+     */
+    public Stats stats() {
+        return new Stats(this);
     }
 
 }
