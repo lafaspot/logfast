@@ -289,8 +289,8 @@ public class Logger {
      * Call this in case the logger is not going to be used any more or for a long time.
      */
     public void flush() {
-        currentPageRef = LogPageRef.NULL;
         manager.returnPage(this, context, currentPageRef);
+        currentPageRef = LogPageRef.NULL;
     }
 
     protected LogPageRef getCurrentPage() {
