@@ -31,7 +31,7 @@ public class Logger {
      * @author lafa
      *
      */
-    public static enum Level {
+    public enum Level {
 
         /**
          * fatal.
@@ -63,7 +63,7 @@ public class Logger {
          */
         TRACE(TRACEINT);
 
-        private Level(final int numeric) {
+        Level(final int numeric) {
             this.numeric = numeric;
         }
 
@@ -232,7 +232,9 @@ public class Logger {
             LogPage page = currentPageRef.get();
             if (page != null) {
                 if (legacy) {
-                    logger.debug(context.toString() + " " + data.toString(), e);
+                    if (logger.isDebugEnabled()) {
+                        logger.debug(context.toString() + " " + data.toString(), e);
+                    }
                 }
                 page.log(context, level, data, e, isDumpStackOn);
             }
