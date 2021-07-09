@@ -135,7 +135,7 @@ public class LogManager {
     private class PageRemoveByIdPredicate implements Predicate<LogPageRef> {
         private long minPageId;
 
-        public PageRemoveByIdPredicate(final long minPageId) {
+        PageRemoveByIdPredicate(final long minPageId) {
             this.minPageId = minPageId;
         }
 

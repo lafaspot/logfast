@@ -27,7 +27,7 @@ public class LogPageRef extends SoftReference<LogPage>implements Comparable<LogP
      * @param referent
      *            object the new soft reference will refer to
      * @param q
-     *            the queue with which the reference is to be registered, or <tt>null</tt> if registration is not required
+     *            the queue with which the reference is to be registered, or <span>null</span> if registration is not required
      *
      */
     public LogPageRef(final LogPage referent, final ReferenceQueue<? super LogPage> q) {
