@@ -4,7 +4,7 @@ branches:
   - stable
 language: java
 jdk:
-- oraclejdk8
+- openjdk14
 before_install:
 install:
 - mvn clean install -Dgpg.skip=true
